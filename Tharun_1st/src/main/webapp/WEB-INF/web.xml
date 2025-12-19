@@ -6,7 +6,7 @@
          version="5.0">
 
     <welcome-file-list>
-        <welcome-file>pages/Main.jsp</welcome-file>
+        <welcome-file>masterpages/Login.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>

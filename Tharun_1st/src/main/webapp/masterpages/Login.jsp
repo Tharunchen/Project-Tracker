@@ -1,8 +1,8 @@
-<%@page import="Model.RoleAsingModel"%>
+<%@page import="Model.RoleAsingModel"%> 
 <%@page import="Model.RolesDetails"%>
-<%@page import="java.util.List"%>
 <%@ page import="Utilities.SampleUtilities" %>
-<%@ page import="Model.SampleModel" %>
+<%@ page import="Model.SampleModel" %> 
+<%@page import="java.util.List"%>
 <%@ page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,6 +16,28 @@
 <link href="${pageContext.request.contextPath}/build/css/all.css" rel="stylesheet"> 
 <link href="${pageContext.request.contextPath}/build/css/login.css" rel="stylesheet"> 
 <script src="${pageContext.request.contextPath}/build/js/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <%
+    SampleUtilities sampleUtilitiess = new SampleUtilities();
+    String action = request.getParameter("action");
+
+    if ("getRoles".equals(action)) {
+
+        String username = request.getParameter("username");
+        
+
+        List<RolesDetails> roleList =
+        		sampleUtilitiess.getdropdown(username);
+
+        out.println("<option value=''>Select-Role</option>");
+
+        for (RolesDetails role : roleList) {
+            out.println("<option value='" + role.getSlno() + "'>"
+                    + role.getRolename() + "</option>");
+        }
+        return; 
+    }
+    %>
 <style>
     body{
         font-family: Arial, sans-serif;
@@ -83,37 +105,33 @@ try {
     SampleModel SampleModels = new SampleModel();
     SampleUtilities SampleUtilitiess = new SampleUtilities();
     RoleAsingModel RoleAsingModels = new RoleAsingModel();
+
     
     if ("saveData".equals(request.getParameter("type"))) {
 
         String username = request.getParameter("username");
 
-        SampleUtilities util = new SampleUtilities();
-        List<SampleModel> users = util.getAllDetails();
+        String roleId   = request.getParameter("role");      
+        String roleName = request.getParameter("rolename");  
 
-        boolean found = false;
+        if (username != null && roleId != null && roleName != null) {
 
-        for (SampleModel user : users) {
-            if (user.getUsername().equalsIgnoreCase(username)) {
-                found = true;
-                session.setAttribute("User", user.getUsername());
-                session.setAttribute("Role", "User");
-                break;
-            }
-        }
+            session.setAttribute("User", username);
+            session.setAttribute("RoleId", roleId);
+            session.setAttribute("Role", roleName);
 
-        if (found) {
             response.sendRedirect(
                 request.getContextPath() + "/pages/Main.jsp"
             );
             return;
         } else {
             response.sendRedirect(
-                request.getContextPath() + "/masterpages/Login.jsp?error=Invalid Username"
+                request.getContextPath() + "/masterpages/Login.jsp?error=Select Username and Role"
             );
             return;
         }
     }
+
 
     
 
@@ -132,7 +150,7 @@ try {
       <img src="${pageContext.request.contextPath}/images/logo.png" width="100%"><br><br> 
       <h5 style="font-size:20px; margin:0 auto;"><b>Sign In</b></h5>
       
-            <select name="username" class="form-control field-input" required>
+            <select name="username" id="username" class="form-control field-input" required>
         <option value="">Select-Username</option>
         <%
         for (RolesDetails u : SampleUtilitiess.getdropdownusername()) {
@@ -146,10 +164,11 @@ try {
         <% } %>
     </select>
        <div class="col-md-4">
-        <%
+       
+       <%--  <%
 			List<RolesDetails> rolename = SampleUtilitiess.getdropdown(); %>
-								<select class="form-control mb-3" name="projecttypeid"
-									id="projecttypeid" data-live-search="true" required>
+								<select class="form-control mb-3" name="role"
+									id="role" data-live-search="true" required>
 									<option value="">Select-Role</option>
 									<%
 										for (RolesDetails displayrole : rolename) {
@@ -161,8 +180,14 @@ try {
 									<%
 										}
 									%>
+								</select> --%>
+								<select class="form-control mb-3" name="role" id="role" required>
+								    <option value="">Select-Role</option>
 								</select>
+								
 								</div>	
+								<input type="hidden" name="rolename" id="rolename">
+								
 								<button type="submit" >LOGIN</button> 
 								</div>
 								 </div> 
@@ -175,6 +200,50 @@ try {
         <a href="Register.jsp">Register Here</a>
     </div>
 </div>
+
+<script>
+$(document).ready(function () {
+
+    // When role changes, store role name
+    $("#role").change(function () {
+        let roleName = $("#role option:selected").text();
+        $("#rolename").val(roleName);
+    });
+
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+    $("#username").change(function () {
+
+        let username = $(this).val();
+        //console.log("Username changed:", username);
+
+        if (username === "") {
+            $("#role").html('<option value="">Select-Role</option>');
+            return;
+        }
+
+        $.ajax({
+            url: "<%= request.getContextPath() %>/masterpages/Login.jsp",
+            type: "POST",
+            data: {
+                action: "getRoles",
+                username: username
+            },
+            success: function (data) {
+                $("#role").html(data);
+            },
+            error: function () {
+                alert("Failed to load roles");
+            }
+        });
+    });
+
+});
+</script>
 
 
 

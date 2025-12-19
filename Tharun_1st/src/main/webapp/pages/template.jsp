@@ -4,7 +4,7 @@
 String username = (String) session.getAttribute("User");
 String role = (String) session.getAttribute("Role");
 if (username == null) username = "Guest";
-if (role == null) role = "User";
+if (role == null) role = "";
 %>
 
 <!DOCTYPE html>

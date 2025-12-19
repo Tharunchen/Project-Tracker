@@ -84,6 +84,31 @@ public class SampleUtilities extends Message {
         }
         return list;
     }
+    
+    public List<RolesDetails> getUserDetails() {
+
+        List<RolesDetails> list = new ArrayList<>();
+
+        try {
+        	 String Query =
+        	            "SELECT rd.slno, ra.username, rd.rolename " +
+        	            "FROM roles_details rd " +
+        	            "JOIN role_assigned ra ON ra.role_assigned_id = rd.slno";
+        	 
+            ResultSet res = DatabaseOperations.select(Query);
+
+            while (res.next()) {
+            	RolesDetails model = new RolesDetails();
+                model.setSlno(res.getInt("slno"));
+                model.setUsername(res.getString("username"));
+                model.setRolename(res.getString("rolename"));
+                list.add(model);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     // UPDATE
     public String updateSkill(SampleModel model) {
@@ -102,16 +127,44 @@ public class SampleUtilities extends Message {
         return message;
     }
     
-    public List<RolesDetails> getdropdown() {
+    public List<RolesDetails> getdropdown(String username) {
 
         List<RolesDetails> list = new ArrayList<>();
 
         try {
-			/*
-			 * String Query="SELECT * FROM roles_details rd " +
-			 * "left join role_assigned ra on ra.role_assigned_id=rd.slno " +
-			 * "where rd.slno=ra.role_assigned_id";
-			 */
+			
+			  String Query="SELECT rd.slno,ra.username,rd.rolename FROM roles_details rd " +
+			  "left join role_assigned ra on ra.role_assigned_id=rd.slno " +
+			  "where rd.slno=ra.role_assigned_id and ra.username='"+username+"' and ra.deleteflag=0";
+			 
+        	//String Query="SELECT * FROM role_assigned";
+        	
+            ResultSet res = DatabaseOperations.select(Query);
+
+            while (res.next()) {
+            	RolesDetails model = new RolesDetails();
+                model.setSlno(res.getInt("slno"));
+                model.setUsername(res.getString("username"));
+                model.setRolename(res.getString("rolename"));
+                list.add(model);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    
+    public List<RolesDetails> getroledropdown() {
+
+        List<RolesDetails> list = new ArrayList<>();
+
+        try {
+			
+			 /* String Query="SELECT rd.slno,ra.username,rd.rolename FROM roles_details rd " +
+			  "left join role_assigned ra on ra.role_assigned_id=rd.slno " +
+			  "where rd.slno=ra.role_assigned_id";*/
+			 
         	String Query="SELECT * FROM roles_details";
         	
             ResultSet res = DatabaseOperations.select(Query);
@@ -119,6 +172,7 @@ public class SampleUtilities extends Message {
             while (res.next()) {
             	RolesDetails model = new RolesDetails();
                 model.setSlno(res.getInt("slno"));
+                //model.setUsername(res.getString("username"));
                 model.setRolename(res.getString("rolename"));
                 list.add(model);
             }
