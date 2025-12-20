@@ -50,17 +50,19 @@
 }
 
 </style>
-
+<%
+String role=(String) session.getAttribute("Role");%>
 <div class="topnavbar">
 
     
 
-    <ul>
+    <ul><%if(role.contains("Admin")) { %>
         <li>
             <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/masterpage.jsp">
                 MasterPages
             </a>
         </li>
+        <%} %>
 
         <li>
             <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/Skills.jsp">

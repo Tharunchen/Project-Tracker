@@ -3,7 +3,7 @@
 
 if (contentPage == null || contentPage.trim().isEmpty()) 
 { 
-	contentPage = "/masterpages/masterpage.jsp"; // default page 
+	contentPage = "/masterpages/project_register.jsp"; // default page 
 	} %> 
 	
 	<jsp:include page="/pages/template.jsp"> 
