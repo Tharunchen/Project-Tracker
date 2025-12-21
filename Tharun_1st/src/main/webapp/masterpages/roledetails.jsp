@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">	
 <title>Insert title here</title>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -108,7 +108,7 @@ button {
 </script>
 <script type="text/javascript">
 	function deleterow(slno) {
-		window.location.href = "Main.jsp?page=/masterpages/roledetails.jsp?slno=" + slno
+		window.location.href = "<%=request.getContextPath()%>/masterpages/roledetails.jsp?slno=" + slno
 				+ "&type=deleteData";
 	}
 </script>
@@ -133,6 +133,7 @@ button {
 
 			    response.sendRedirect(request.getContextPath() +"/pages/Main.jsp?page=/masterpages/roledetails.jsp");
 			    return;
+			    
 			}
 
 
@@ -149,18 +150,15 @@ if ("displayData".equalsIgnoreCase(request.getParameter("type"))) {
 }
 
 if(request.getParameter("type")!=null && request.getParameter("type").equalsIgnoreCase("deleteData")){
-	 String message;
+	 
 
-	    if (request.getParameter("slno") != null) {
-	        slno = Integer.parseInt(request.getParameter("slno"));
-	        message = new RoleAssignUtilities().deleteentry(slno);
-	    } else {
-	        message = Message.SOMETHING_WENT_WRONG;
-	    }
-
-	    RedirectUtil.redirect( request, response, message, "/masterpages/roledetails.jsp"
-	    );
-	    return;
+	    if (request.getParameter("slno") != null) 
+	    	slno = Integer.parseInt(request.getParameter("slno"));
+	    
+	        String message = new RoleAssignUtilities().deleteentry(slno);
+	        session.setAttribute("msg", message);
+	        response.sendRedirect(request.getContextPath() +"/pages/Main.jsp?page=/masterpages/roledetails.jsp");
+	        return;
 	
 }
 
