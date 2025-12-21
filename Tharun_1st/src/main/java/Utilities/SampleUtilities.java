@@ -187,7 +187,7 @@ public class SampleUtilities extends Message {
         List<RolesDetails> list = new ArrayList<>();
 
         try {
-            ResultSet res = DatabaseOperations.select("SELECT username FROM role_assigned group by username");
+            ResultSet res = DatabaseOperations.select("SELECT username FROM role_assigned where deleteflag=0 group by username");
 
             while (res.next()) {
             	RolesDetails model = new RolesDetails();

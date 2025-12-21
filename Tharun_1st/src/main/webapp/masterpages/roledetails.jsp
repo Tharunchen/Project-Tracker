@@ -121,24 +121,20 @@ button {
 		RoleAssignUtilities RoleAssignUtilitiess = new RoleAssignUtilities();
 		RoleAsingModel RoleAsingModels = new RoleAsingModel();
 		
-		if (request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("saveData")) {
-		
-		RoleAsingModels.setUsername(request.getParameter("username"));
-		RoleAsingModels.setRoleid(request.getParameter("role"));
-		
-		String message = RoleAssignUtilitiess.insertroledetails(RoleAsingModels);
-		 request.setAttribute("msg", message);
-		  
-		 RequestDispatcher rd =
-				    request.getRequestDispatcher(
-				        "/pages/Main.jsp?contentPage=masterpages/roledetails.jsp"
-				    );
-				rd.forward(request, response);
-				return;
+		if (request.getParameter("type") != null &&
+			    request.getParameter("type").equalsIgnoreCase("saveData")) {
 
-		/* response.sendRedirect(request.getContextPath() + "/pages/Main.jsp?page=/masterpages/roledetails.jsp" + message); */
-		
-}
+			    RoleAsingModels.setUsername(request.getParameter("username"));
+			    RoleAsingModels.setRoleid(request.getParameter("role"));
+
+			    String message = RoleAssignUtilitiess.insertroledetails(RoleAsingModels);
+
+			    session.setAttribute("msg", message);
+
+			    response.sendRedirect(request.getContextPath() +"/pages/Main.jsp?page=/masterpages/roledetails.jsp");
+			    return;
+			}
+
 
 
 if ("displayData".equalsIgnoreCase(request.getParameter("type"))) {
@@ -189,7 +185,7 @@ if (msg != null) {
 		<div class="container p-4">
 		
 	<form method="post" class="row align-items-center"
-      action="<%=request.getContextPath()%>/pages/Main.jsp?contentPage=masterpages/roledetails.jsp&type=saveData">
+      action="<%=request.getContextPath()%>/masterpages/roledetails.jsp?type=saveData">
     <input type="hidden" name="slno" value="<%=slno%>">
     
     <div class="col-md-4 col-12 d-flex align-items-center gap-2"> 
