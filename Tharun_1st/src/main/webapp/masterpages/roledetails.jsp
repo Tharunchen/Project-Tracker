@@ -121,8 +121,7 @@ button {
 		RoleAssignUtilities RoleAssignUtilitiess = new RoleAssignUtilities();
 		RoleAsingModel RoleAsingModels = new RoleAsingModel();
 		
-		if (request.getParameter("type") != null &&
-			    request.getParameter("type").equalsIgnoreCase("saveData")) {
+		if (request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("saveData")) {
 
 			    RoleAsingModels.setUsername(request.getParameter("username"));
 			    RoleAsingModels.setRoleid(request.getParameter("role"));
@@ -138,7 +137,7 @@ button {
 
 
 
-if ("displayData".equalsIgnoreCase(request.getParameter("type"))) {
+if (request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("displayData")) {
 
 	RoleAsingModel RoleAsingModelss = new RoleAsingModel(); 
 	String slnoParam = request.getParameter("slno");
