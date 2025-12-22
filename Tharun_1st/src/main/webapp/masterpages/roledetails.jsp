@@ -170,7 +170,7 @@ if (msg != null) {
     <%= msg %>
 </div>
 <%
-    session.removeAttribute("msg"); // show once only
+    session.removeAttribute("msg"); 
 }
 %>
 	<div role="main" id="main-wrapper">

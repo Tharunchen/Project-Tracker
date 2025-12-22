@@ -65,13 +65,13 @@ String role=(String) session.getAttribute("Role");%>
         <%} %>
 
         <li>
-            <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/Skills.jsp">
-                Skills
+            <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/project_register.jsp">
+                Project Register
             </a>
         </li>
 
         <li>
-            <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/Dashboard.jsp">
+            <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/dashboard1.jsp">
                 Dashboard
             </a>
         </li>
