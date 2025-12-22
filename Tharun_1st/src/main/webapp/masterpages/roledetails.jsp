@@ -102,7 +102,7 @@ button {
 
 <script type="text/javascript">
 	function editrow(slno) {
-		window.location.href = "Main.jsp?page=/masterpages/roledetails.jsp?slno=" + slno
+		window.location.href = "<%=request.getContextPath()%>/masterpages/roledetails.jsp?slno=" + slno
 				+ "&type=displayData";
 	}
 </script>
