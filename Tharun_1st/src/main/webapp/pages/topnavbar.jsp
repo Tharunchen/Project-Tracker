@@ -56,7 +56,7 @@ String role=(String) session.getAttribute("Role");%>
 
     
 
-    <ul><%if(role.contains("Admin")) { %>
+    <ul><%if(role.contains("Admin") || role.contains("Developer")) { %>
         <li>
             <a href="${pageContext.request.contextPath}/pages/Main.jsp?page=/masterpages/masterpage.jsp">
                 MasterPages
