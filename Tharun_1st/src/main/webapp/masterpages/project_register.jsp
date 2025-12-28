@@ -11,7 +11,6 @@
 	<div role="main" id="main-wrapper">
 		<main id="main" class="main">
 
-
 			<jsp:include page="/pages/topnavbar.jsp" />
 		</main>
 		</div>
