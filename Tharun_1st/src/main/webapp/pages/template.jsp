@@ -1,10 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 
 <%
 String username = (String) session.getAttribute("User");
 String role = (String) session.getAttribute("Role");
-if (username == null) username = "Guest";
-if (role == null) role = "";
+if (username == null)
+	username = "Guest";
+if (role == null)
+	role = "";
 %>
 
 <!DOCTYPE html>
@@ -12,139 +14,139 @@ if (role == null) role = "";
 <head>
 <title>Project Tracker</title>
 
-<link href="${pageContext.request.contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
 <style>
 body {
-    margin: 0;
-    background: #f5f6fb;
-    font-family: Arial, sans-serif;
+	margin: 0;
+	background: #f5f6fb;
+	font-family: Arial, sans-serif;
 }
 
 /* HEADER */
 .header {
-    height: 60px;
-    background: white;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+	height: 60px;
+	background: white;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .header img {
-    height: 40px;
+	height: 40px;
 }
 
 .header h4 {
-    flex: 1;
-    text-align: center;
-    margin: 0;
-    color: #1e3a8a;
+	flex: 1;
+	text-align: center;
+	margin: 0;
+	color: #1e3a8a;
 }
 
 /* LAYOUT */
 .main {
-    display: flex;
+	display: flex;
 }
 
 /* SIDEBAR */
 .sidebar {
-    width: 240px;
-    background: linear-gradient(180deg, #ede9fe, #f5f3ff);
-    height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 25px;
-    box-shadow: inset -1px 0 0 rgba(0,0,0,0.05);
+	width: 240px;
+	background: linear-gradient(180deg, #ede9fe, #f5f3ff);
+	height: calc(100vh - 60px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 25px;
+	box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.05);
 }
 
-
 .profile-box {
-    text-align: center;
-    margin-box:25px;
+	text-align: center;
+	margin-box: 25px;
 }
 
 .profile-box img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #7c3aed;
-    margin-bottom: 10px;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	border: 3px solid #7c3aed;
+	margin-bottom: 10px;
 }
 
-
 .profile-name {
-    font-weight: 600;
-    font-size: 16px;
-    margin-top: 6px;
-    color: #4c1d95;
+	font-weight: 600;
+	font-size: 16px;
+	margin-top: 6px;
+	color: #4c1d95;
 }
 
 .profile-role {
-    font-size: 13px;
-    color: #6d28d9;
+	font-size: 13px;
+	color: #6d28d9;
 }
+
 .content {
-    flex: 1;
-    padding: 20px;
+	flex: 1;
+	padding: 20px;
 }
+
 .clock-card {
-    margin-top: 25px;
-    width: 220px;
-    height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	margin-top: 25px;
+	width: 220px;
+	height: 220px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 #container {
-    width: 220px;
-    height: 220px;
+	width: 220px;
+	height: 220px;
 }
-
-
 </style>
 </head>
 
 <body>
 
 
-<div class="header">
-    <img src="${pageContext.request.contextPath}/images/industry.png">
-    <h4>Project Tracker</h4>
-    
-     <a href="${pageContext.request.contextPath}/masterpages/Login.jsp">
-                <img src="${pageContext.request.contextPath}/images/logout.png">
-                </a>
-                
-</div>
+	<div class="header">
+		<img src="${pageContext.request.contextPath}/images/industry.png">
+		<h4>Project Tracker</h4>
+
+		<a href="${pageContext.request.contextPath}/masterpages/Login.jsp">
+			<img src="${pageContext.request.contextPath}/images/logout.png">
+		</a>
+
+	</div>
 
 
-<!-- BODY -->
-<div class="main">
+	<!-- BODY -->
+	<div class="main">
 
-    <!-- LEFT PROFILE -->
-    <div class="sidebar">
-        <div class="profile-box">
-            <img src="${pageContext.request.contextPath}/images/user.png">
-            <div class="profile-name"><%= username %></div>
-            <div class="profile-role"><%= role %></div>
-        </div>
-        <div class="clock-card">
-            <div id="container" > </div>
-        </div>
-    </div>
+		<!-- LEFT PROFILE -->
+		<div class="sidebar">
+			<div class="profile-box">
+				<img src="${pageContext.request.contextPath}/images/user.png">
+				<div class="profile-name"><%=username%></div>
+				<div class="profile-role"><%=role%></div>
+			</div>
+			<div class="clock-card">
+				<div id="container"></div>
+			</div>
+		</div>
 
-    <!-- PAGE CONTENT -->
-    <div class="content">
-        <jsp:include page="${param.contentPage}" />
-    </div>
+		<!-- PAGE CONTENT -->
+		<div class="content">
+			<jsp:include page="${param.contentPage}" />
+		</div>
 
-</div>
-<script>
+	</div>
+	<script>
 const getNow = () => {
     const now = new Date();
     return {
